@@ -1,0 +1,59 @@
+\chapter{Task 44: Social Connectedness Index II}
+
+\section{Dataset and goal}
+We use the Social Connectedness Index II (SCI) by Meta/HDX, which reports the intensity of Facebook friendship ties between pairs of administrative regions.
+Each record provides a pair of regions and a positive score (\texttt{scaled\_sci}).
+This release covers 178 countries and corresponds to the reference period 2025-12-26 to 2026-01-25 (updated 2026-02-07, CC0) \cite{hdxSCI}.
+Following the task instructions, we exclude the USA from our outputs.
+
+\paragraph{Concept of SCI.}
+SCI is a normalized measure of friendship intensity between locations. Conceptually, for regions $i,j$ one can think of
+\[
+\mathrm{SCI}_{ij} \propto \frac{F_{ij}}{U_i\,U_j},
+\]
+where $F_{ij}$ is the number of friendships connecting the two regions and $U_i,U_j$ are the corresponding Facebook-user populations; published values are then rescaled within each layer to $[1,10^9]$ (\texttt{scaled\_sci}) \cite{hdxSCI,metaSCI}.
+In our analysis we treat \texttt{scaled\_sci} as a \emph{within-country} edge weight.
+
+\section{Network construction}
+\paragraph{End-to-end pipeline.}
+From the raw SCI layer CSVs, we:
+\begin{itemize}
+    \item select the set of countries to include;
+    \item set the resolution per country: EU countries use NUTS3 (higher resolution), while all other countries use GADM level 1;
+    \item keep within-country rows only (\texttt{user\_country = friend\_country}), drop self-loops, store one edge per unordered pair, and sum duplicate \texttt{scaled\_sci};
+    \item optionally add coordinates by joining a separate region-centroids table (built from boundary polygons), then export the submission CSVs and run sanity checks.
+\end{itemize}
+
+\paragraph{Nodes.}
+Nodes represent subnational administrative regions at the best available resolution.
+We export a single \texttt{nodes.csv} with global consecutive \texttt{nodeID} and \texttt{nodeLabel}; labels are prefixed with ISO3 (e.g., \texttt{ITA:...}) to avoid collisions.
+
+\paragraph{Edges.}
+Edges are built \emph{within country} only.
+We treat ties as undirected, keep one edge per unordered region pair, and aggregate duplicates by summing \texttt{scaled\_sci}; self-loops are removed.
+The submission file \texttt{edges.csv} stores endpoints and country tags; \texttt{edges\_weighted.csv} is produced for analysis/debug.
+
+\paragraph{Geographic coordinates.}
+The SCI layer CSVs do not include coordinates.
+We therefore build a region-to-coordinate table by downloading administrative boundary datasets and extracting one representative point per polygon (EPSG:4326), using:
+\begin{itemize}
+    \item \textbf{GADM v4.1} level-1 polygons (downloaded as shapefiles; region code \texttt{GID\_1}) \cite{gadm41}.
+    \item \textbf{EU NUTS 2024} level-3 polygons (GISCO GeoJSON; region code \texttt{NUTS\_ID}) \cite{giscoNUTS2024}.
+\end{itemize}
+The resulting \texttt{(latitude, longitude)} are merged into \texttt{nodes.csv} when available; boundary files are large and are downloaded on demand and cached locally.
+
+\section{Sanity checks}
+For the selected top-100 countries (by available GADM1 regions, USA excluded), the global output contains $N=3040$ nodes and $E=134016$ edges.
+Coordinate coverage is high after including centroids (\mbox{$\sim 98\%$ of nodes}).
+Within-country graphs are often very dense (close to complete), so unweighted structure is less informative than weighted summaries.
+To mitigate size effects we inspect mean edge weight (total \texttt{scaled\_sci} divided by $E$).
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.47\linewidth]{figures/task44/scatter_N_vs_E.pdf}\hfill
+    \includegraphics[width=0.47\linewidth]{figures/task44/mean_scaled_sci_rank_topK.pdf}
+    \caption{Left: number of edges versus number of nodes for each country network (log--log scale). The black curve is the complete-graph reference $E=N(N-1)/2$. Right: mean within-country connectedness (total \texttt{scaled\_sci} divided by $E$) versus country rank (top 10).}
+    \label{fig:task44_sanity}
+\end{figure}
+
+\clearpage

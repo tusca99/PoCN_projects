@@ -1,0 +1,148 @@
+Field,Label,Value
+id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+title,Title of Dataset,Facebook Social Connectedness Index
+name,Dataset URL,social-connectedness-index
+notes,Description,"We use an anonymized snapshot of all active Facebook users and their friendship networks to measure the intensity of connectedness between locations. The Social Connectedness Index (SCI) quantifies the relative probability that two individuals from different geographies are Facebook friends, providing a large-scale measure of social ties across regions.  This release updates the SCI with substantially expanded global coverage and finer geographic resolution, including new subnational units across 178 countries. Details on the underlying data and index construction are provided in the “The Social Connectedness Index.pdf.” A companion GitHub repository, available at [https://github.com/social-connectedness-index/social-connectedness-index], provides code to generate maps from the SCI with minimal setup."
+dataset_source,Source,Facebook
+organization,Contributor,AI and Data for Good at Meta
+dataset_date,Reference Period,[2025-12-26T00:00:00 TO 2026-01-25T23:59:59]
+last_modified,Updated,2026-02-07T08:44:07.952701
+data_update_frequency,Expected Update Frequency,As needed
+groups,Location,"Albania, Algeria, American Samoa, Andorra, Angola, Anguilla, Antigua and Barbuda, Argentina, Armenia, Aruba, Australia, Austria, Azerbaijan, Bahamas, Bahrain, Bangladesh, Barbados, Belarus, Belgium, Belize, Benin, Bermuda, Bhutan, Bolivia (Plurinational State of), Bosnia and Herzegovina, Botswana, Brazil, British Virgin Islands, Brunei Darussalam, Bulgaria, Burkina Faso, Burundi, Cabo Verde, Cambodia, Cameroon, Canada, Cayman Islands, Central African Republic, Chad, Chile, China, Hong Kong Special Administrative Region, China, Macao Special Administrative Region, Colombia, Comoros, Congo, Cook Islands, Costa Rica, Côte d'Ivoire, Croatia, Curaçao, Cyprus, Czechia, Democratic Republic of the Congo, Denmark, Djibouti, Dominica, Dominican Republic, Ecuador, Egypt, El Salvador, Equatorial Guinea, Eritrea, Estonia, Eswatini, Ethiopia, Faroe Islands, Fiji, Finland, France, French Guiana, French Polynesia, Gabon, Gambia, Georgia, Germany, Ghana, Gibraltar, Greece, Greenland, Grenada, Guadeloupe, Guam, Guatemala, Guernsey, Guinea, Guinea-Bissau, Guyana, Haiti, Honduras, Hungary, Iceland, India, Indonesia, Ireland, Isle of Man, Israel, Italy, Jamaica, Japan, Jersey, Jordan, Kazakhstan, Kenya, Kiribati, Kuwait, Kyrgyzstan, Lao People's Democratic Republic, Latvia, Lebanon, Lesotho, Liberia, Libya, Liechtenstein, Lithuania, Luxembourg, Madagascar, Malawi, Malaysia, Maldives, Mali, Malta, Marshall Islands, Martinique, Mauritania, Mauritius, Mayotte, Mexico, Micronesia (Federated States of), Monaco, Mongolia, Montserrat, Mozambique, Namibia, Nauru, Nepal, Netherlands, New Caledonia, New Zealand, Nicaragua, Niger, Nigeria, North Macedonia, Northern Mariana Islands, Norway, Oman, Pakistan, Palau, Panama, Papua New Guinea, Paraguay, Peru, Philippines, Poland, Portugal, Puerto Rico, Qatar, Republic of Korea, Republic of Moldova, Réunion, Romania, Rwanda, Saint Helena, Saint Kitts and Nevis, Saint Lucia, Saint Pierre and Miquelon, Saint Vincent and the Grenadines, Samoa, San Marino, Sao Tome and Principe, Saudi Arabia, Senegal, Serbia, Seychelles, Sierra Leone, Singapore, Slovakia, Slovenia, Solomon Islands, South Africa, South Sudan, Spain, Sri Lanka, Suriname, Sweden, Switzerland, Taiwan (Province of China), Tajikistan, Thailand, Togo, Tonga, Trinidad and Tobago, Tunisia, Turkmenistan, Turks and Caicos Islands, Tuvalu, Türkiye, Uganda, United Arab Emirates, United Kingdom, United Republic of Tanzania, United States, United States Virgin Islands, Uruguay, Uzbekistan, Vanuatu, Viet Nam, Wallis and Futuna Islands, Zambia, Zimbabwe"
+license_title,License,Public Domain / No restrictions (CC0)
+methodology,Methodology,Other
+methodology_other,Define Methodology,"We use an anonymized snapshot of all active Facebook users and their friendship networks to measure the intensity of connectedness between locations. The Social Connectedness Index (SCI) is a measure of the social connectedness between different geographies. Specifically, it measures the relative probability that two individuals across two locations are friends with each other on Facebook.
+
+This release updates the SCI with substantially expanded global coverage and finer geographic resolution, including new subnational units across 178 countries. Details on the underlying data and index construction are provided in the “The Social Connectedness Index.pdf.” "
+caveats,Caveats/Comments,"We do not provide older versions of the Social Connectedness Index as we do not recommend it being interpreted as a time series. The methodology for constructing SCI has changed over time (and continues to improve), and we do not backfill for previous dates. "
+tags,Tags,social media data
+resource_1_created,Created,2026-01-29T19:57:13.419564
+resource_1_description,Description,
+resource_1_format,File Format,PDF
+resource_1_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/d26548fb-8935-4018-937b-4c0cacf99007/download/the-social-connectedness-index.pdf
+resource_1_id,Resource ID,d26548fb-8935-4018-937b-4c0cacf99007
+resource_1_last_modified,Updated,2026-01-29T19:57:13.119808
+resource_1_metadata_modified,Metadata Updated,2026-01-29T19:57:15.634801
+resource_1_microdata,Microdata,False
+resource_1_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_1_resource_type,Resource Type,file.upload
+resource_1_name,Resource Name,The Social Connectedness Index.pdf
+resource_1_mimetype,MIME Type,application/pdf
+resource_1_size,Size,5.2M
+resource_2_created,Created,2026-01-29T19:59:27.289990
+resource_2_description,Description,"Country-to-country SCI pairs. Each row represents a unique country–country pair, identified by ISO2 codes."
+resource_2_format,File Format,CSV
+resource_2_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/652cf9c9-541f-47de-8d53-ff818062bd0c/download/country.zip
+resource_2_id,Resource ID,652cf9c9-541f-47de-8d53-ff818062bd0c
+resource_2_last_modified,Updated,2026-01-29T19:59:26.835664
+resource_2_metadata_modified,Metadata Updated,2026-02-04T21:09:06.904572
+resource_2_microdata,Microdata,False
+resource_2_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_2_resource_type,Resource Type,file.upload
+resource_2_name,Resource Name,country.zip
+resource_2_mimetype,MIME Type,application/zip
+resource_2_size,Size,187.5K
+resource_3_created,Created,2026-01-29T20:02:55.888227
+resource_3_description,Description,"Subnational SCI pairs at GADM administrative level 1 (e.g., states/provinces). Built using Database of Global Administrative Areas (GADM, version 4.1). Each row represents a region–region pair within GADM level 1."
+resource_3_format,File Format,CSV
+resource_3_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/8e1b8b59-c12e-48ea-9af3-41dde75916d5/download/gadm1.zip
+resource_3_id,Resource ID,8e1b8b59-c12e-48ea-9af3-41dde75916d5
+resource_3_last_modified,Updated,2026-01-29T20:02:55.373870
+resource_3_metadata_modified,Metadata Updated,2026-02-04T21:09:09.743242
+resource_3_microdata,Microdata,False
+resource_3_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_3_resource_type,Resource Type,file.upload
+resource_3_name,Resource Name,gadm1.zip
+resource_3_mimetype,MIME Type,application/zip
+resource_3_size,Size,76.6M
+resource_4_created,Created,2026-02-04T20:54:11.771470
+resource_4_description,Description,"Subnational SCI pairs at GADM administrative level 2 (e.g., counties/districts). Built using Database of Global Administrative Areas (GADM, version 4.1). Due to size, data is split into 12 shards, where each shard contains regions up to the last ISO2 country code in that shard (alphabetically)."
+resource_4_format,File Format,CSV
+resource_4_download_url,Download URL,https://drive.google.com/uc?export=download&id=1M3XTjZG_bgzGkEZ1tJgZ6qLcuPJU5Ck4
+resource_4_id,Resource ID,c70ea7dd-e9e9-491f-ad1b-84e22c89c736
+resource_4_last_modified,Updated,2026-02-07T08:44:07.952701
+resource_4_metadata_modified,Metadata Updated,2026-02-07T10:49:20.121294
+resource_4_microdata,Microdata,False
+resource_4_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_4_resource_type,Resource Type,api
+resource_4_name,Resource Name,gadm2.zip
+resource_4_mimetype,MIME Type,
+resource_4_size,Size,2.4K
+resource_5_created,Created,2026-01-29T20:32:46.513585
+resource_5_description,Description,Subnational SCI pairs at geoBoundaries ADM1 level. Built using the geoBoundaries Global Database of Political Administrative Boundaries.
+resource_5_format,File Format,CSV
+resource_5_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/6419cafc-5edb-4355-9577-b086ecc8d21d/download/geoboundaries_adm1.zip
+resource_5_id,Resource ID,6419cafc-5edb-4355-9577-b086ecc8d21d
+resource_5_last_modified,Updated,2026-01-29T20:32:45.969646
+resource_5_metadata_modified,Metadata Updated,2026-02-04T21:09:15.690258
+resource_5_microdata,Microdata,False
+resource_5_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_5_resource_type,Resource Type,file.upload
+resource_5_name,Resource Name,geoboundaries_adm1.zip
+resource_5_mimetype,MIME Type,application/zip
+resource_5_size,Size,102.4M
+resource_6_created,Created,2026-02-04T20:54:07.615910
+resource_6_description,Description,"Subnational SCI pairs at geoBoundaries ADM2 level. Built using the geoBoundaries Global Database of Political Administrative Boundaries. Split into 12 shards, ordered alphabetically by ISO2 country code, with shard names indicating the last country included."
+resource_6_format,File Format,CSV
+resource_6_download_url,Download URL,https://drive.google.com/uc?export=download&id=1y6DHFyFpmadbDKYQ0a4UaI7EK-FuJgK8
+resource_6_id,Resource ID,56e49d23-3e62-4013-b593-6dd326888b3a
+resource_6_last_modified,Updated,2026-02-07T08:44:07.952701
+resource_6_metadata_modified,Metadata Updated,2026-02-07T10:49:20.121521
+resource_6_microdata,Microdata,False
+resource_6_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_6_resource_type,Resource Type,api
+resource_6_name,Resource Name,geoboundaries_adm2.zip
+resource_6_mimetype,MIME Type,
+resource_6_size,Size,2.4K
+resource_7_created,Created,2026-01-29T19:57:09.045851
+resource_7_description,Description,"European subnational SCI pairs based on NUTS 2024 regions. Includes all NUTS levels (1, 2, 3). Contains three files for the three NUTS levels."
+resource_7_format,File Format,CSV
+resource_7_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/b691d1d1-b286-456d-9a23-16e2f2d463cc/download/nuts_2024.zip
+resource_7_id,Resource ID,b691d1d1-b286-456d-9a23-16e2f2d463cc
+resource_7_last_modified,Updated,2026-01-29T19:57:08.687552
+resource_7_metadata_modified,Metadata Updated,2026-02-04T21:09:21.049823
+resource_7_microdata,Microdata,False
+resource_7_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_7_resource_type,Resource Type,file.upload
+resource_7_name,Resource Name,nuts_2024.zip
+resource_7_mimetype,MIME Type,application/zip
+resource_7_size,Size,12.4M
+resource_8_created,Created,2026-01-29T20:08:56.280922
+resource_8_description,Description,US county-level SCI pairs. Each row represents a county-to-county pair. Counties are denoted by their 5-digit FIPS code.
+resource_8_format,File Format,CSV
+resource_8_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/97dc352f-c9c5-47d6-a6ef-88709e14006c/download/us_counties.zip
+resource_8_id,Resource ID,97dc352f-c9c5-47d6-a6ef-88709e14006c
+resource_8_last_modified,Updated,2026-01-29T20:08:55.627152
+resource_8_metadata_modified,Metadata Updated,2026-02-04T21:09:24.223714
+resource_8_microdata,Microdata,False
+resource_8_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_8_resource_type,Resource Type,file.upload
+resource_8_name,Resource Name,us_counties.zip
+resource_8_mimetype,MIME Type,application/zip
+resource_8_size,Size,59.0M
+resource_9_created,Created,2026-02-04T20:54:04.123511
+resource_9_description,Description,"US ZIP Code Tabulation Area (ZCTA) SCI pairs. Split into 10 shards, where shard number n contains all ZIP codes whose starting digit is n."
+resource_9_format,File Format,CSV
+resource_9_download_url,Download URL,https://drive.google.com/uc?export=download&id=13gbCdgHD-xfkogDoSzcAGKhNLHMPy8tR
+resource_9_id,Resource ID,2c3dffc1-fda9-4045-94b0-6d1a6f4cbb74
+resource_9_last_modified,Updated,2026-02-07T08:44:07.952701
+resource_9_metadata_modified,Metadata Updated,2026-02-07T10:49:20.121857
+resource_9_microdata,Microdata,False
+resource_9_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_9_resource_type,Resource Type,api
+resource_9_name,Resource Name,us_zcta.zip
+resource_9_mimetype,MIME Type,
+resource_9_size,Size,2.4K
+resource_10_created,Created,2026-01-29T20:00:57.058563
+resource_10_description,Description,"SCI between countries and subnational regions at various granularities. Contains all region types in the dataset (GADM 1/2, geoBoundaries ADM 1/2, NUTS 1/2/3, US counties, ZCTA)."
+resource_10_format,File Format,CSV
+resource_10_download_url,Download URL,https://data.humdata.org/dataset/e9988552-74e4-4ff4-943f-c782ac8bca87/resource/953e8683-bcf7-49f9-908f-1e14209e98d3/download/all_region_to_country.zip
+resource_10_id,Resource ID,953e8683-bcf7-49f9-908f-1e14209e98d3
+resource_10_last_modified,Updated,2026-01-29T20:00:56.505115
+resource_10_metadata_modified,Metadata Updated,2026-02-04T21:09:40.195939
+resource_10_microdata,Microdata,False
+resource_10_dataset_id,Dataset ID,e9988552-74e4-4ff4-943f-c782ac8bca87
+resource_10_resource_type,Resource Type,file.upload
+resource_10_name,Resource Name,all_region_to_country.zip
+resource_10_mimetype,MIME Type,application/zip
+resource_10_size,Size,206.7M

@@ -1,0 +1,13 @@
+# Task 15: SOC Model (Self-Organized Criticality)
+# Final report pipeline (Brummitt 2012 experiments + plotting)
+
+numpy>=1.21.0
+networkx>=2.6.0
+pandas>=1.3.0
+matplotlib>=3.4.0
+
+# Required for running the simulations efficiently.
+numba>=0.54.0
+
+# Optional: progress bars
+tqdm>=4.62.0
