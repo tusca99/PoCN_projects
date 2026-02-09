@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.3)  9 FEB 2026 10:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025) (preloaded format=pdflatex 2025.10.3)  9 FEB 2026 12:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1447,36 +1447,36 @@ l.33
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/loca
 l/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/
 2025/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}]
-<figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf, id=91, 534.79799pt x 332.4420
+<figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf, id=92, 534.79799pt x 332.4420
 2pt>
 File: figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf Graphic file (type pdf)
 <use figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf>
 Package pdftex.def Info: figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf  used 
 on input line 36.
-(pdftex.def)             Requested size: 198.45662pt x 123.36684pt.
-<figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf, id=92, 534.79799pt x 332.4420
+(pdftex.def)             Requested size: 216.1011pt x 134.33391pt.
+<figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf, id=93, 534.79799pt x 332.4420
 2pt>
 File: figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf Graphic file (type pdf)
 <use figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf>
 Package pdftex.def Info: figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf  used 
 on input line 37.
-(pdftex.def)             Requested size: 198.45662pt x 123.36684pt.
-<figures/task15/pr_large_global_vs_p_pretty_R3.pdf, id=93, 534.79799pt x 332.44
+(pdftex.def)             Requested size: 216.1011pt x 134.33391pt.
+<figures/task15/pr_large_global_vs_p_pretty_R3.pdf, id=94, 534.79799pt x 332.44
 202pt>
 File: figures/task15/pr_large_global_vs_p_pretty_R3.pdf Graphic file (type pdf)
 
 <use figures/task15/pr_large_global_vs_p_pretty_R3.pdf>
 Package pdftex.def Info: figures/task15/pr_large_global_vs_p_pretty_R3.pdf  use
 d on input line 45.
-(pdftex.def)             Requested size: 198.45662pt x 123.36684pt.
-<figures/task15/pr_large_global_vs_p_pretty_SF.pdf, id=94, 534.79799pt x 332.44
+(pdftex.def)             Requested size: 216.1011pt x 134.33391pt.
+<figures/task15/pr_large_global_vs_p_pretty_SF.pdf, id=95, 534.79799pt x 332.44
 202pt>
 File: figures/task15/pr_large_global_vs_p_pretty_SF.pdf Graphic file (type pdf)
 
 <use figures/task15/pr_large_global_vs_p_pretty_SF.pdf>
 Package pdftex.def Info: figures/task15/pr_large_global_vs_p_pretty_SF.pdf  use
 d on input line 46.
-(pdftex.def)             Requested size: 198.45662pt x 123.36684pt.
+(pdftex.def)             Requested size: 216.1011pt x 134.33391pt.
 
 
 
@@ -1519,13 +1519,13 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 
 
 {/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/lm/lm-ts1.enc}]
-<figures/task44/scatter_N_vs_E.pdf, id=332, 375.804pt x 375.804pt>
+<figures/task44/scatter_N_vs_E.pdf, id=333, 375.804pt x 375.804pt>
 File: figures/task44/scatter_N_vs_E.pdf Graphic file (type pdf)
 <use figures/task44/scatter_N_vs_E.pdf>
 Package pdftex.def Info: figures/task44/scatter_N_vs_E.pdf  used on input line 
 53.
 (pdftex.def)             Requested size: 207.27887pt x 207.27774pt.
-<figures/task44/mean_scaled_sci_rank_topK.pdf, id=333, 375.804pt x 375.804pt>
+<figures/task44/mean_scaled_sci_rank_topK.pdf, id=334, 375.804pt x 375.804pt>
 File: figures/task44/mean_scaled_sci_rank_topK.pdf Graphic file (type pdf)
 <use figures/task44/mean_scaled_sci_rank_topK.pdf>
 Package pdftex.def Info: figures/task44/mean_scaled_sci_rank_topK.pdf  used on 
@@ -1583,7 +1583,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  30340 strings out of 467748
  554680 string characters out of 5426965
- 1077143 words of memory out of 5000000
+ 1078143 words of memory out of 5000000
  58400 multiletter control sequences out of 15000+600000
  683113 words of font info for 74 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1599,10 +1599,10 @@ sr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmri12.pfb></usr/local/t
 exlive/2025/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></usr/local/texlive/202
 5/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/local/texlive/2025/texmf-dis
 t/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (7 pages, 1354849 bytes).
+Output written on main.pdf (7 pages, 1354850 bytes).
 PDF statistics:
- 509 PDF objects out of 1000 (max. 8388607)
- 215 compressed objects within 3 object streams
+ 510 PDF objects out of 1000 (max. 8388607)
+ 216 compressed objects within 3 object streams
  34 named destinations out of 1000 (max. 500000)
  117 words of extra memory for PDF output out of 10000 (max. 10000000)
 
