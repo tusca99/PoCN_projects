@@ -22,9 +22,6 @@ Used for the final report figures:
 - `code/brummitt2012_experiments.py`: coupled-module experiments (regular modules + SF extension).
 - `code/plot_brummitt2012.py`: regenerates report-ready (“pretty”) plots from CSV outputs.
 
-Not used in the final report:
-- `code/legacy/`: older Bonabeau/Goh experiments and a pure-Python BTW reference implementation.
-
 ## Reproduce the report figures
 
 All commands below assume you run them from `projects/task_15`.
@@ -63,26 +60,6 @@ python code/plot_brummitt2012.py --indir data/brummitt2012_SF_microP_final2_2026
 ```
 
 Note on the shaded band (“glow”) in the scale-free Brummitt plots: it is a 95% Wilson score confidence interval for the estimated probability of a “large event”, computed from (approximate) aggregated binomial counts in `plot_brummitt2012.py`.
-
-## What is not used in the report
-
-Bonabeau/Goh replication scripts are not used in the final Task 15 write-up and are kept under `code/legacy/`.
-
-## Optional demo (not cited in the report)
-
-A single-network SOC run on the US power grid (Opsahl dataset) is available as a demo:
-- Input edge list: `data/opsahl-powergrid/out.opsahl-powergrid`
-- Output folder: `data/powergrid_soc_2026-02-07/`
-- Script: `code/soc_real_network.py`
-
-Command used:
-
-```bash
-python code/soc_real_network.py \
-  --outdir data/powergrid_soc_2026-02-07 \
-  --edge-file data/opsahl-powergrid/out.opsahl-powergrid \
-  --dataset opsahl-powergrid
-```
 
 ---
 
