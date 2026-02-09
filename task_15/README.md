@@ -1,20 +1,16 @@
 # Task 15: SOC Model (Self-Organized Criticality)
 
-This folder contains the code and data used for Task 15. The authoritative write-up is the LaTeX report (the section for this task lives under the shared report project).
+**Score**: 0.6
+**Type**: Theoretical
+
+This folder contains the code and data used for Task 15.
 
 This README is intentionally focused on:
 - what each script does;
 - how to reproduce the figures used in the report;
 - where outputs are written.
 
-## References used (and where they appear)
-
-The Task 15 report section is Brummitt-centric:
-1. Brummitt et al. (2012): Coupled modules and the effect of interdependence (local vs inflicted cascades; optimal coupling idea).
-
-Older Bonabeau/Goh replication code is kept under `code/legacy/` but is not used in the final report.
-
-## Code map (what is what)
+## Code map
 
 Used for the final report figures:
 - `code/numba_sandpile.py`: Numba-accelerated CSR simulation kernels (including two-module engine).
@@ -59,8 +55,6 @@ python code/plot_brummitt2012.py --indir data/brummitt2012_R3_final2_2026-02-07
 python code/plot_brummitt2012.py --indir data/brummitt2012_SF_microP_final2_2026-02-07
 ```
 
-Note on the shaded band (“glow”) in the scale-free Brummitt plots: it is a 95% Wilson score confidence interval for the estimated probability of a “large event”, computed from (approximate) aggregated binomial counts in `plot_brummitt2012.py`.
-
 ---
 
-Last updated: 2026-02-07
+Last updated: 2026-02-09
