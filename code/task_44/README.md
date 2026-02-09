@@ -25,30 +25,48 @@ PH,KR,PHL.10_1,KOR.15_1,885
 ```
 
 In this workspace:
-- `projects/task_44/data/gadm1/gadm1.csv` (GADM level 1 regions)
-- `projects/task_44/data/nuts_2024/nuts3_2024.csv` (EU NUTS3)
-- `projects/task_44/data/all_region_to_country/*.csv` (fast country list source)
+- `data/task_44/gadm1/gadm1.csv` (GADM level 1 regions)
+- `data/task_44/nuts_2024/nuts3_2024.csv` (EU NUTS3)
+- `data/task_44/all_region_to_country/*.csv` (fast country list source)
 
 ## Outputs
 
-Canonical outputs live under `projects/task_44/data/global/`:
+Canonical outputs live under `data/task_44/global/`:
 
 - `nodes.csv` with `nodeID,nodeLabel,latitude,longitude`
 - `edges.csv` with `nodeID_from,nodeID_to,country_name,country_ISO3`
 - `edges_weighted.csv` (optional) adds `scaled_sci`
 
 Plots and summary (optional) are written to:
-- `projects/task_44/data/global/plots/`
-- `projects/task_44/data/global/summary_by_country.csv`
+- `data/task_44/global/plots/`
+- `data/task_44/global/summary_by_country.csv`
 
 ## Quickstart
 
-Run from `projects/task_44`:
+### Step 0: Manual downloads (required)
+
+Download the SCI layer CSVs from the HumData/Meta page and place them exactly here:
+
+- `data/task_44/all_region_to_country/`
+	- `gadm1_to_country.csv`
+	- `nuts3_2024_to_country.csv`
+- `data/task_44/gadm1/`
+	- `gadm1.csv`
+- `data/task_44/nuts_2024/`
+	- `nuts3_2024.csv`
+- `data/task_44/country/`
+	- `country.csv`
+
+Only these layer files are used by the pipeline.
+
+### Step 1: Run the pipeline
+
+Run from the repo root:
 
 ```bash
-python code/task44.py build
-python code/task44.py plot
-python code/task44.py validate
+python code/task_44/task44.py build
+python code/task_44/task44.py plot
+python code/task_44/task44.py validate
 ```
 
 Useful flags:
@@ -59,12 +77,12 @@ Useful flags:
 - `--centroid-workers N` (parallel GADM downloads)
 
 Intermediate files:
-- `projects/task_44/data/processed/country_list.csv`
-- `projects/task_44/data/processed/centroids.csv`
+- `data/task_44/processed/country_list.csv`
+- `data/task_44/processed/centroids.csv`
 
 ## Code map
 
-All scripts live in `projects/task_44/code/`.
+All scripts live in `code/task_44/`.
 
 - `task44.py`: single CLI (build, plot, validate)
 - `build_country_list.py`: builds `data/processed/country_list.csv`
