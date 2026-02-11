@@ -54,10 +54,8 @@ Download the SCI layer CSVs from the HumData/Meta page and place them exactly he
 	- `gadm1.csv`
 - `data/task_44/nuts_2024/`
 	- `nuts3_2024.csv`
-- `data/task_44/country/`
-	- `country.csv`
 
-Only these layer files are used by the pipeline.
+Only these layer files are manually needed, the rest (geographical shapefiles) will be downloaded during centroid generation (approx. 10GBs).
 
 ### Step 1: Run the pipeline
 
