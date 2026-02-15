@@ -160,6 +160,33 @@ def cmd_plot(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_analyze(args: argparse.Namespace) -> int:
+    """Run weighted network analysis and produce report figures."""
+    data_dir = args.data_dir
+
+    print("=" * 70)
+    print("Task 44 - Weighted Network Analysis")
+    print("=" * 70)
+
+    import weighted_analysis
+
+    try:
+        weighted_analysis.analyse(
+            data_dir=data_dir,
+            fig_dir=args.fig_dir,
+            top_k=args.top_k,
+            max_nodes_clustering=args.max_nodes_clustering,
+        )
+    except Exception as e:
+        print(f"Error in weighted analysis: {e}")
+        return 1
+
+    print("\n" + "=" * 70)
+    print("Analysis complete!")
+    print("=" * 70)
+    return 0
+
+
 def cmd_validate(args: argparse.Namespace) -> int:
     """Validate the generated network and geocodes."""
     data_dir = args.data_dir
@@ -287,6 +314,23 @@ def main(argv: list[str] | None = None) -> int:
     )
     plot_parser.set_defaults(func=cmd_plot)
     
+    # ANALYZE command
+    analyze_parser = subparsers.add_parser(
+        "analyze",
+        help="Run weighted network analysis and produce report figures",
+    )
+    analyze_parser.add_argument(
+        "--fig-dir", type=Path,
+        default=Path(__file__).resolve().parent.parent.parent / "latex" / "figures" / "task44",
+        help="Output directory for report figures",
+    )
+    analyze_parser.add_argument("--top-k", type=int, default=15)
+    analyze_parser.add_argument(
+        "--max-nodes-clustering", type=int, default=120,
+        help="Skip weighted clustering for countries with N > this",
+    )
+    analyze_parser.set_defaults(func=cmd_analyze)
+
     # VALIDATE command
     validate_parser = subparsers.add_parser(
         "validate",

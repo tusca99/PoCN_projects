@@ -15,5 +15,9 @@
 *.run.xml
 *.xdv
 
+# Python
+__pycache__/
+*.pyc
+
 # Editor/backup files
 *~
