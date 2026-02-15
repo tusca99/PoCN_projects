@@ -1,57 +1,85 @@
 \chapter{Task 15: Self-Organized Criticality on Networks}
 
 
-\section{Framework (BTW sandpile on a graph)}
+\section{Framework}
 We simulate the Bak--Tang--Wiesenfeld (BTW) sandpile on a network with $N$ nodes.
 Each node $i$ carries an integer load $z_i\in\{0,1,2,\dots\}$ and a threshold $z_c(i)$.
-At each driving step one grain is added to a uniformly random node; then the system relaxes via topplings.
-On a generic graph we take $z_c(i)=k_i$ (degree threshold), so one toppling at $i$ sends one grain to each neighbor.
-If $z_i\ge z_c(i)$, a toppling performs
+At each driving step one grain is added to a uniformly random node; the system then relaxes via topplings.
+On a generic graph we set $z_c(i)=k_i$ (degree threshold), so a toppling at $i$ sends exactly one grain to each of its $k_i$ neighbors:
 \begin{equation}
 z_i \leftarrow z_i-k_i,\qquad z_j \leftarrow z_j+1\ \ \forall j\in\partial i.
 \end{equation}
-To reach a stationary regime on finite networks we include dissipation with small probability $f$ (per-toppling) so that avalanches remain finite.
+On finite networks without open boundaries, some form of dissipation is needed for a stationary state.
+We use \emph{per-grain} dissipation~\cite{goh2003sandpile}: each outgoing grain is independently lost with probability $f$, so that on average a fraction $f$ of the redistributed load disappears per toppling.
 An \emph{avalanche} is the full relaxation triggered by one grain addition.
-We measure standard observables~\cite{bonabeau1995sandpile,goh2003sandpile}: size $S$ (total topplings), duration $T$ (number of update waves), and area $A$ (distinct toppled nodes).
+We measure: size $S$ (total topplings), duration $T$ (parallel-update waves), and area $A$ (distinct toppled nodes).
 
-\section{Results}
-\paragraph{From SOC on networks to SOC with interdependence.}
-Power-law avalanche statistics on networks are a standard signature of self-organized criticality in sandpile models~\cite{bonabeau1995sandpile,goh2003sandpile}. Here we focus on a complementary question: how \emph{interdependence} between two networked systems reshapes the probability of extreme events, following Brummitt et al.~\cite{brummitt2012suppressing}.
+\section{SOC on single topologies}
+
+\paragraph{Mean-field baseline (Bonabeau).}
+In the random-neighbor (annealed) model~\cite{bonabeau1995sandpile} each toppling redistributes grains to $k$ nodes chosen uniformly at random rather than along fixed edges.
+This removes quenched structural correlations and yields mean-field exponents: the avalanche-size distribution follows $P(S)\sim S^{-3/2}$, i.e.\ the CCDF scales as $P(S\ge s)\sim s^{-1/2}$.
+We verify this numerically with $N=20\,000$, $k=4$, and dissipation $\varepsilon\in\{10^{-3},3\!\times\!10^{-3},10^{-2}\}$ ($3\times10^5$ driving steps each, $2\times10^4$ transient discarded).
+Fig.~\ref{fig:bonabeau_ccdf} (left) confirms the expected power-law tail; smaller $\varepsilon$ extends the scaling regime before the finite-size cutoff.
+
+\paragraph{Quenched scale-free topology (Goh et al.).}
+On a quenched scale-free network generated with the static model~\cite{goh2003sandpile} (mean degree $\langle k\rangle=4$, degree threshold $z_c(i)=k_i$), the avalanche exponent depends on the degree exponent $\gamma$.
+Goh et al.\ predict $\tau_A=\gamma/(\gamma-1)$ for $2<\gamma<3$ (non-mean-field) and $\tau_A=3/2$ for $\gamma\ge3$ (mean-field), with $\tau_A$ defined via $P(A)\sim A^{-\tau_A}$.
+
+\paragraph{Topology comparison.}
+We run the BTW sandpile ($z_c(i)=k_i$, per-grain dissipation $f=10^{-4}$, $2\times10^5$ steps, $2\times10^4$ transient) on six synthetic topologies with $N\approx20\,000$: a 2D square lattice ($141\!\times\!141$, open boundary), an Erd\H{o}s--R\'{e}nyi (ER) random graph ($\langle k\rangle\!\approx\!4$), a Watts--Strogatz (WS) small-world network ($k\!=\!4$, rewiring $\beta\!=\!0.1$), a Barab\'{a}si--Albert (BA) preferential-attachment network ($m\!=\!2$), and two scale-free (SF) networks from the static model with $\gamma\!=\!2.5$ and $\gamma\!=\!3.0$.
+Fig.~\ref{fig:bonabeau_ccdf} (right) overlays the resulting area CCDFs.
+The lattice, ER, and WS networks produce nearly overlapping curves consistent with the mean-field $A^{-1/2}$ decay, as expected for homogeneous-degree graphs.
+The BA and SF networks exhibit steeper tails: degree heterogeneity increases the probability of moderate-sized events (initiated by hub topplings) while reducing the very large ones.
+Lowering $\gamma$ steepens the tail further, in qualitative agreement with the Goh et al.\ prediction of $\tau_A>\frac{3}{2}$ for $\gamma<3$.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=0.49\linewidth]{figures/task15/compare_ccdf_size.pdf}\hfill
+    \includegraphics[width=0.49\linewidth]{figures/task15/topology_comparison_ccdf.pdf}
+    \caption{Left: annealed random-neighbor model ($N=20\,000$, $k=4$) avalanche-size CCDF for three dissipation rates; dashed line marks the mean-field slope $-1/2$.
+    Right: avalanche-area CCDF on six quenched topologies ($N\!\approx\!20\,000$, degree threshold, $f\!=\!10^{-4}$); homogeneous networks cluster near the MF guide while heterogeneous ones (BA, SF) show steeper tails.}
+    \label{fig:bonabeau_ccdf}
+\end{figure}
+
+\section{SOC with interdependence}
 
 \paragraph{Coupled sandpiles and large cascades.}
-We consider two modules $A$ and $B$ and add sparse interconnections controlled by a coupling parameter $p$.
-Here a \emph{module} simply denotes one of the two subnetworks ($A$ or $B$) in the coupled system~\cite{brummitt2012suppressing}.
-In this section, $N$ denotes the number of nodes \emph{per module} (so the coupled system has $2N$ nodes).
-Because the BTW threshold is degree-based ($z_c(i)=k_i$), adding bridges modifies both (i) pathways for load to propagate between modules and (ii) node capacities/total load that the system can hold~\cite{brummitt2012suppressing}.
-\enlargethispage*{1.8\baselineskip}
-Following~\cite{brummitt2012suppressing}, we classify events by whether a \emph{large} cascade occurs in module $A$, using a fixed cutoff on the avalanche size in that module: $S_A>C$ with $C=\frac{N}{2}=1000$.
-We also track \emph{global} cascades using $S>C_g$ with $C_g=N=2000$, following~\cite{brummitt2012suppressing} like before.
-Dissipation is implemented in per-toppling mode with probability $f=0.01$.
-The ``regular'' modules are random regular graphs $R(z_a)$ and $R(z_b)$ (here $z_a=z_b=3$), whereas the scale-free modules are generated by a static model with tunable exponent $\gamma$ (including $\gamma=\infty$, approaching a limit to where the degree distribution becomes uniform).
-In the scale-free panels, the shaded band shows a 95\% Wilson score confidence interval (binomial) for the estimated probability from aggregated event counts.
-The three curves in Fig.~\ref{fig:brummitt_local_compare} separate cascades that stay in $A$ (local) from those triggered by activity arriving from the other module (inflicted), and their sum (any large in $A$). For small $p$, interconnections are beneficial because they suppress the largest within-module cascades; for large $p$, they become detrimental because they enable inflicted events and also increase capacities/total load. The trade-off can produce an intermediate optimum in $p$~\cite{brummitt2012suppressing}.
-\enlargethispage*{1.8\baselineskip}
-\begin{figure}
+We now consider two modules $A$ and $B$, each with $N=2000$ nodes, connected by a sparse set of inter-module edges (bridges).
+Each node in module $A$ is independently selected as a bridge endpoint with probability $p$; the same number of nodes is drawn from $B$ and paired uniformly at random~\cite{brummitt2012suppressing}.
+Because the threshold is degree-based, adding a bridge to node $i$ raises its threshold $z_c(i)$ by one (higher local stability), but also creates a new pathway for load to propagate between modules.
+
+Following~\cite{brummitt2012suppressing}, we classify events by whether a \emph{large} cascade occurs in module $A$: $S_A>C$ with $C=N/2=1000$.
+We also track \emph{global} cascades ($S>C_g$, $C_g=N=2000$).
+Dissipation is per-toppling with $f=0.01$; each simulation runs $5\times10^5$ steps with $5\times10^4$ transient.
+The ``regular'' modules are random $3$-regular graphs; the scale-free modules use the static model with tunable $\gamma$ (taking $\gamma=\infty$ recovers a homogeneous degree distribution near the ER limit).
+In the SF panels, shaded bands show 95\% Wilson-score confidence intervals from aggregated event counts across 2 replicates.
+
+Fig.~\ref{fig:brummitt_local_compare} separates cascades that remain within $A$ (local) from those triggered by activity arriving from module $B$ (inflicted), and their union (any large in $A$).
+At small $p$, the few bridges divert load away from module $A$, suppressing its largest within-module cascades.
+At large $p$, bridges raise node thresholds (making individual topplings less frequent) but simultaneously enable inflicted cascades: when a node does topple, it can inject load into the other module.
+The competition between these two effects can produce a non-trivial optimum $p^*$ at which large cascades are least likely~\cite{brummitt2012suppressing}.
+
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf}\hfill
     \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf}
-    \caption{Coupled networks: probability of a large cascade in module $A$ versus coupling $p$ (regular vs scale-free modules). Scale-free modules show a stronger dependence on the generating exponent $\gamma$, while regular modules follow a smoother trend with $p$.}
+    \caption{Probability of a large cascade in module $A$ versus coupling $p$. Left: regular modules ($z=3$) showing the local/inflicted/overall decomposition. Right: SF modules for several $\gamma$; lower $\gamma$ shifts the minimum to smaller $p$.}
     \label{fig:brummitt_local_compare}
 \end{figure}
 
-
-\begin{figure}
+\begin{figure}[t]
     \centering
     \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_global_vs_p_pretty_R3.pdf}\hfill
     \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_global_vs_p_pretty_SF.pdf}
-    \caption{Robustness across event definitions: probability of a \emph{global} large cascade ($S>C_g$, with $C_g=2000$) versus coupling $p$. The qualitative non-monotonic dependence on $p$ persists, supporting the interpretation of an ``optimal coupling'' rather than a cutoff artifact~\cite{brummitt2012suppressing}.}
+    \caption{Probability of a \emph{global} large cascade ($S>C_g=2000$) versus $p$. The non-monotonic shape persists, supporting the ``optimal coupling'' interpretation rather than a cutoff artifact.}
     \label{fig:brummitt_global_compare}
 \end{figure}
 
-Global large cascades (defined by $S>C_g$) are rarer but more systemic events than ``large-in-$A$'' cascades, as seen in Fig.~\ref{fig:brummitt_global_compare}.
-The non-monotonic dependence on coupling $p$ persists: small $p$ can suppress the largest within-module events, whereas large $p$ enables inter-module propagation (inflicted cascades) and increases total capacity/load, which can fuel larger system-wide events.
-The similar qualitative shape across regular and scale-free modules supports the interpretation of an ``optimal coupling'' rather than a cutoff-specific artifact.
-For a detailed branching-process description and analytic estimates of the optimal coupling $p^*$, we refer to~\cite{brummitt2012suppressing}.
+Global cascades (Fig.~\ref{fig:brummitt_global_compare}) show the same qualitative non-monotonic pattern.
+Small coupling suppresses the largest events; strong coupling enables system-wide propagation.
+For the regular-module case, the optimum lies near $p^*\approx 0.01$, consistent with~\cite{brummitt2012suppressing}.
+In the SF extension, the optimum $p^*$ shifts to smaller values for lower $\gamma$: heterogeneous networks are more sensitive to inter-module coupling, likely because high-degree hubs act as efficient conduits for cross-module load transfer once bridges reach them.
 
 \clearpage
 

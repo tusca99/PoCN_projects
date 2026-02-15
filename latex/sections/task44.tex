@@ -1,59 +1,73 @@
 \chapter{Task 44: Social Connectedness Index II}
 
-\section{Dataset and goal}
-We use the Social Connectedness Index II (SCI) by Meta/HDX, which reports the intensity of Facebook friendship ties between pairs of administrative regions.
-Each record provides a pair of regions and a positive score (\texttt{scaled\_sci}).
-This release covers 178 countries and corresponds to the reference period 2025-12-26 to 2026-01-25 (updated 2026-02-07, CC0) \cite{hdxSCI}.
-Following the task instructions, we exclude the USA from our outputs.
-
-\paragraph{Concept of SCI.}
-SCI is a normalized measure of friendship intensity between locations. Conceptually, for regions $i,j$ one can think of
+\section{Dataset and network construction}
+The Social Connectedness Index (SCI) by Meta quantifies the intensity of Facebook friendship ties between pairs of administrative regions~\cite{metaSCI}.
+For regions $i,j$ the published score is
 \[
-\mathrm{SCI}_{ij} \propto \frac{F_{ij}}{U_i\,U_j},
+\mathrm{SCI}_{ij}\;\propto\;\frac{F_{ij}}{U_i\,U_j},
 \]
-where $F_{ij}$ is the number of friendships connecting the two regions and $U_i,U_j$ are the corresponding Facebook-user populations; published values are then rescaled within each layer to $[1,10^9]$ (\texttt{scaled\_sci}) \cite{hdxSCI,metaSCI}.
-In our analysis we treat \texttt{scaled\_sci} as a \emph{within-country} edge weight.
+where $F_{ij}$ counts cross-region friendships and $U_i,U_j$ are the Facebook-user populations; values are rescaled within each layer to $[1,\,10^{9}]$ (\texttt{scaled\_sci})~\cite{hdxSCI}.
+We use the SCI~II release (reference period 2025-12-26 to 2026-01-25, CC0)~\cite{hdxSCI} and, following task instructions, exclude the USA.
 
-\section{Network construction}
-\paragraph{End-to-end pipeline.}
-From the raw SCI layer CSVs, we:
-\begin{itemize}
-    \item select the set of countries to include;
-    \item set the resolution per country: EU countries use NUTS3 (higher resolution), while all other countries use GADM level 1;
-    \item keep within-country rows only (\texttt{user\_country = friend\_country}), drop self-loops, store one edge per unordered pair, and sum duplicate \texttt{scaled\_sci};
-    \item optionally add coordinates by joining a separate region-centroids table (built from boundary polygons), then export the submission CSVs and run sanity checks.
-\end{itemize}
+\paragraph{Resolution.}
+We adopt the finest resolution available in the SCI layer files: \textbf{NUTS\,3} for EU countries (via GISCO 2024 boundaries~\cite{giscoNUTS2024}) and \textbf{GADM level\,1} for all others (GADM~v4.1~\cite{gadm41}).
+The SCI data do not provide sub-national codes at GADM level~3; GADM\,1 is therefore the highest resolution accessible outside Europe.
 
-\paragraph{Nodes.}
-Nodes represent subnational administrative regions at the best available resolution.
-We export a single \texttt{nodes.csv} with global consecutive \texttt{nodeID} and \texttt{nodeLabel}; labels are prefixed with ISO3 (e.g., \texttt{ITA:...}) to avoid collisions.
+\paragraph{Construction.}
+From the raw layer CSVs we retain only \emph{within-country} edges, drop self-loops, keep one edge per unordered pair, and sum duplicate \texttt{scaled\_sci} values.
+Geographic coordinates (EPSG:4326) are obtained from boundary-polygon representative points.
+The resulting global deliverable contains $N=3\,040$ nodes and $E=134\,016$ edges across 99 countries; coordinate coverage is ${\sim}\,98\%$ of nodes.
 
-\paragraph{Edges.}
-Edges are built \emph{within country} only.
-We treat ties as undirected, keep one edge per unordered region pair, and aggregate duplicates by summing \texttt{scaled\_sci}; self-loops are removed.
-The submission file \texttt{edges.csv} stores endpoints and country tags; \texttt{edges\_weighted.csv} is produced for analysis/debug.
+\section{Completeness and weighted perspective}
 
-\paragraph{Geographic coordinates.}
-The SCI layer CSVs do not include coordinates.
-We therefore build a region-to-coordinate table by downloading administrative boundary datasets and extracting one representative point per polygon (EPSG:4326), using:
-\begin{itemize}
-    \item \textbf{GADM v4.1} level-1 polygons (downloaded as shapefiles; region code \texttt{GID\_1}) \cite{gadm41}.
-    \item \textbf{EU NUTS 2024} level-3 polygons (GISCO GeoJSON; region code \texttt{NUTS\_ID}) \cite{giscoNUTS2024}.
-\end{itemize}
-The resulting \texttt{(latitude, longitude)} are merged into \texttt{nodes.csv} when available; boundary files are large and are downloaded on demand and cached locally.
+A key observation is that \emph{every} within-country graph is \textbf{complete}: the SCI dataset reports a weight for every pair of regions, so $E=\binom{N}{2}$ and density$\,=1$ for all 99 countries (Fig.~\ref{fig:task44_sanity}, left).
+Consequently, standard unweighted metrics are uninformative: $P(k)=\delta_{k,N-1}$, $C=1$, and modularity $Q=0$.
+All meaningful structure resides in the \emph{weights}; the remainder of the analysis is therefore weighted.
 
-\section{Sanity checks}
-For the selected top-100 countries (by available GADM1 regions, USA excluded), the global output contains $N=3040$ nodes and $E=134016$ edges.
-Coordinate coverage is high after including centroids (\mbox{$\sim 98\%$ of nodes}).
-Within-country graphs are often very dense (close to complete), so unweighted structure is less informative than weighted summaries.
-To mitigate size effects we inspect mean edge weight (total \texttt{scaled\_sci} divided by $E$).
-
-\begin{figure}[h]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=0.47\linewidth]{figures/task44/scatter_N_vs_E.pdf}\hfill
-    \includegraphics[width=0.47\linewidth]{figures/task44/mean_scaled_sci_rank_topK.pdf}
-    \caption{Left: number of edges versus number of nodes for each country network (log--log scale). The black curve is the complete-graph reference $E=N(N-1)/2$. Right: mean within-country connectedness (total \texttt{scaled\_sci} divided by $E$) versus country rank (top 10).}
+    \includegraphics[width=0.49\linewidth]{figures/task44/scatter_N_vs_E.pdf}\hfill
+    \includegraphics[width=0.49\linewidth]{figures/task44/mean_scaled_sci_rank_topK.pdf}
+    \caption{Left: edges versus nodes per country (log--log); the black curve is the complete-graph reference $E=N(N-1)/2$, confirming density$\,=1$ for all countries. Right: mean within-country \texttt{scaled\_sci} per edge versus country rank (top~10).}
     \label{fig:task44_sanity}
+\end{figure}
+
+\paragraph{Edge-weight distribution.}
+Within each country we normalise weights by the maximum ($\hat w_{ij}=w_{ij}/w_{\max}$) and pool all edges across the 99 countries.
+The resulting CCDF (Fig.~\ref{fig:weight_strength}, left) spans roughly four decades with a heavy tail: most edges carry low relative weight while a few region pairs are orders of magnitude more connected.
+
+\paragraph{Node strength and Gini coefficient.}
+The strength of node $i$ is $s_i=\sum_j w_{ij}$.
+We summarise within-country strength heterogeneity via the Gini coefficient $G\in[0,1]$ (Fig.~\ref{fig:weight_strength}, right).
+Values range from $G\approx0.07$ (Japan, very homogeneous) to $G\approx0.35$ (UK, dominated by London);
+the colour encodes mean strength, showing that heterogeneity is not simply a size effect.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/task44/weight_and_strength.pdf}
+    \caption{Left: CCDF of the max-normalised edge weight pooled across all 99 countries. Right: strength Gini coefficient versus network size; colour indicates $\log_{10}\langle s\rangle$.}
+    \label{fig:weight_strength}
+\end{figure}
+
+\section{Weighted clustering}
+
+For complete graphs the unweighted clustering coefficient is trivially~1.
+We therefore compute the \emph{weighted} clustering of Onnela et al.~\cite{onnela2005intensity}:
+\[
+C_i^w \;=\; \frac{1}{s_i\,(k_i-1)}\sum_{j,h}\bigl(\hat w_{ij}\,\hat w_{ih}\,\hat w_{jh}\bigr)^{1/3},
+\]
+where $\hat w$ is the max-normalised weight.
+$C^w$ equals~1 only when all triangle weights are identical (perfectly homogeneous connectivity); heterogeneous weights lower it.
+
+Fig.~\ref{fig:clustering} (left) shows $\langle C^w\rangle$ per country (computed for countries with $N\le120$ for tractability).
+Russia, Japan, and Uganda ($C^w\!\gtrsim\!0.89$) exhibit nearly uniform regional connectivity, whereas the UK ($C^w\!\approx\!0.39$) is strongly London-centric.
+The weight matrix of Italy (Fig.~\ref{fig:clustering}, right) visualises the block structure typical of countries with a few dominant metropolitan areas.
+
+\begin{figure}[t]
+    \centering
+    \includegraphics[width=\linewidth]{figures/task44/clustering_comparison.pdf}
+    \caption{Left: weighted clustering $\langle C^w\rangle$ versus $N$; dashed line marks $C^{\rm unw}=1$. Right: log-scaled weight matrix for Italy ($N=107$, NUTS\,3 regions).}
+    \label{fig:clustering}
 \end{figure}
 
 \clearpage
