@@ -85,9 +85,10 @@ def run_single(
     G = nx.convert_node_labels_to_integers(G, first_label=0)
     degrees = np.array([G.degree(i) for i in range(N)], dtype=np.int32)
 
-    # Threshold = degree (Goh convention)
+    # Threshold = degree (Goh convention) — no artificial clamping.
+    # Degree-1 nodes topple at z >= 1, acting as transparent relays.
     z_c = degrees.copy()
-    z_c[z_c < 2] = 2  # safety
+    z_c[z_c < 1] = 1  # safety for hypothetical degree-0 nodes
 
     # Identify bulk vs boundary (nodes with degree < 2 are effectively boundary)
     active_nodes = np.arange(N, dtype=np.int32)
@@ -105,13 +106,16 @@ def run_single(
             0,                     # log_every
         )
         areas = np.asarray(out[0], dtype=np.int64)
+        sizes = np.asarray(out[1], dtype=np.int64)
     else:
         raise RuntimeError("Numba kernel required for efficiency")
 
-    # Filter trivial avalanches (area == 0 means no toppling)
-    areas = areas[areas > 0]
+    # Filter trivial avalanches
+    sizes_nz = sizes[sizes > 0]
+    areas_nz = areas[areas > 0]
 
-    cx, cy = log_binned_ccdf(areas.astype(float), bins=bins)
+    cx_s, cy_s = log_binned_ccdf(sizes_nz.astype(float), bins=bins)
+    cx_a, cy_a = log_binned_ccdf(areas_nz.astype(float), bins=bins)
     k_mean = float(np.mean(degrees))
     k_max_val = int(np.max(degrees))
 
@@ -120,10 +124,13 @@ def run_single(
         "N": N,
         "k_mean": round(k_mean, 2),
         "k_max": k_max_val,
-        "n_events": int(len(areas)),
-        "area_max": int(np.max(areas)) if len(areas) else 0,
-        "ccdf_x": cx,
-        "ccdf_y": cy,
+        "n_events": int(len(sizes_nz)),
+        "size_max": int(np.max(sizes_nz)) if len(sizes_nz) else 0,
+        "area_max": int(np.max(areas_nz)) if len(areas_nz) else 0,
+        "ccdf_size_x": cx_s,
+        "ccdf_size_y": cy_s,
+        "ccdf_area_x": cx_a,
+        "ccdf_area_y": cy_a,
     }
 
 
@@ -132,9 +139,9 @@ def run_single(
 def main() -> None:
     parser = argparse.ArgumentParser(description="BTW on diverse topologies")
     parser.add_argument("--outdir", type=str, required=True)
-    parser.add_argument("--N", type=int, default=20000)
-    parser.add_argument("--steps", type=int, default=200_000)
-    parser.add_argument("--transient", type=int, default=20_000)
+    parser.add_argument("--N", type=int, default=80000)
+    parser.add_argument("--steps", type=int, default=500_000)
+    parser.add_argument("--transient", type=int, default=50_000)
     parser.add_argument("--loss-prob", type=float, default=1e-4)
     parser.add_argument("--bins", type=int, default=50)
     parser.add_argument("--seed", type=int, default=42)
@@ -195,7 +202,7 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=(7, 5))
 
     for i, res in enumerate(results):
-        cx, cy = res["ccdf_x"], res["ccdf_y"]
+        cx, cy = res["ccdf_size_x"], res["ccdf_size_y"]
         if len(cx) < 3:
             continue
         ax.loglog(
@@ -210,15 +217,15 @@ def main() -> None:
         )
 
     # Guide lines for reference slopes
-    xg = np.logspace(0.5, 3.5, 50)
+    xg = np.logspace(0.5, 4.5, 50)
     ax.loglog(xg, 2.0 * xg ** (-0.5), "k--", linewidth=1.0, alpha=0.4,
-              label=r"$A^{-0.5}$ guide (MF)")
-    ax.loglog(xg, 2.0 * xg ** (-1.0), "k:", linewidth=1.0, alpha=0.4,
-              label=r"$A^{-1}$ guide")
+              label=r"$S^{-0.5}$ guide (MF, $\gamma \geq 3$)")
+    ax.loglog(xg, 5.0 * xg ** (-2.0), "k:", linewidth=1.0, alpha=0.4,
+              label=r"$S^{-2}$ guide ($\gamma = 2.5$)")
 
-    ax.set_xlabel("Avalanche area $A$ (distinct toppled nodes)", fontsize=12)
-    ax.set_ylabel(r"$P(A^\prime \geq A)$", fontsize=12)
-    ax.set_title(f"BTW avalanche-area CCDF – topology comparison ($N \\approx$ {N})", fontsize=12)
+    ax.set_xlabel("Avalanche size $S$ (total topplings)", fontsize=12)
+    ax.set_ylabel(r"$P(S^\prime \geq S)$", fontsize=12)
+    ax.set_title(f"BTW avalanche-size CCDF – topology comparison ($N \\approx$ {N})", fontsize=12)
     ax.legend(fontsize=8.5, frameon=False, loc="lower left")
     ax.grid(True, which="major", alpha=0.2)
     ax.xaxis.set_minor_locator(NullLocator())
@@ -232,7 +239,7 @@ def main() -> None:
     # Summary to CSV
     import csv
     with open(outdir / "topology_summary.csv", "w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=["label", "N", "k_mean", "k_max", "n_events", "area_max"])
+        w = csv.DictWriter(f, fieldnames=["label", "N", "k_mean", "k_max", "n_events", "size_max", "area_max"])
         w.writeheader()
         for r in results:
             w.writerow({k: r[k] for k in w.fieldnames})
