@@ -31,13 +31,15 @@ We run the BTW sandpile ($z_c(i)=k_i$, per-grain dissipation $f=10^{-4}$, $5\tim
 Fig.~\ref{fig:bonabeau_ccdf} (right) overlays the resulting avalanche-size CCDFs.
 The homogeneous topologies (lattice, ER, WS) cluster near the mean-field $S^{-1/2}$ guide, confirming that low degree variance leaves scaling unaffected.
 In contrast, the heterogeneous networks (BA, SF) should show markedly steeper tails: degree-heterogeneity concentrates load on hubs, producing more frequent moderate cascades but suppressing the very large ones.
-The SF static model with $\gamma\!=\!2.5$ matches the predicted $\tau_S=\gamma/(\gamma-1)=5/3$ exponent ($\text{CCDF}\sim S^{-2/3}$, much steeper than MF), while $\gamma\!=\!3.0$ already approaches the MF regime~\cite{goh2003sandpile}.
-While slightly different from what expected for heterogeneous topologies, we get a qualitatively consistent pattern of  for more heterogeneous networks, with a consistent pattern but not in the $S^{-2}$ regime.
-\enlargethispage*{\baselineskip}
+Goh et al.\ predict $\tau_S=\gamma/(\gamma-1)=5/3$ for $\gamma\!=\!2.5$ ($\text{CCDF}\sim S^{-2/3}$) and MF recovery for $\gamma\!\ge\!3$~\cite{goh2003sandpile}.
+The qualitative ordering is confirmed---heterogeneous curves are steeper---but the quantitative separation is weaker than in the original paper, where dissipation occurs through a \emph{sink node} connected to all vertices (open boundary) rather than through per-grain stochastic loss.
+With per-grain dissipation the effective loss rate of a hub scales as $\sim fk_i$, disproportionately damping high-degree nodes and partially washing out the topology-dependent exponent shift.
+\enlargethispage*{1.1\baselineskip}
+
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.49\linewidth]{figures/task15/compare_ccdf_size.pdf}\hfill
-    \includegraphics[width=0.49\linewidth]{figures/task15/topology_comparison_ccdf.pdf}
+    \includegraphics[width=0.47\linewidth]{figures/task15/compare_ccdf_size.pdf}\hfill
+    \includegraphics[width=0.47\linewidth]{figures/task15/topology_comparison_ccdf.pdf}
     \caption{Left: annealed random-neighbor model ($N=20\,000$, $k=4$) avalanche-size CCDF for three dissipation rates; dashed line marks the mean-field slope $-1/2$.
     Right: avalanche-size CCDF on six quenched topologies ($N\!\approx\!80\,000$, degree threshold, $f\!=\!10^{-4}$); homogeneous networks cluster near the MF guide while heterogeneous ones (BA, SF) show progressively steeper tails.}
     \label{fig:bonabeau_ccdf}
@@ -63,20 +65,20 @@ The competition between these two effects can produce a non-trivial optimum $p^*
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf}\hfill
-    \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf}
+    \includegraphics[width=0.47\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_R3.pdf}\hfill
+    \includegraphics[width=0.47\linewidth]{figures/task15/pr_large_in_A_vs_p_pretty_SF.pdf}
     \caption{Probability of a large cascade in module $A$ versus coupling $p$. Left: regular modules ($z=3$) showing the local/inflicted/overall decomposition. Right: SF modules for several $\gamma$; lower $\gamma$ shifts the minimum to smaller $p$.}
     \label{fig:brummitt_local_compare}
 \end{figure}
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_global_vs_p_pretty_R3.pdf}\hfill
-    \includegraphics[width=0.49\linewidth]{figures/task15/pr_large_global_vs_p_pretty_SF.pdf}
+    \includegraphics[width=0.47\linewidth]{figures/task15/pr_large_global_vs_p_pretty_R3.pdf}\hfill
+    \includegraphics[width=0.47\linewidth]{figures/task15/pr_large_global_vs_p_pretty_SF.pdf}
     \caption{Probability of a \emph{global} large cascade ($S>C_g=2000$) versus $p$. The non-monotonic shape persists, supporting the ``optimal coupling'' interpretation rather than a cutoff artifact.}
     \label{fig:brummitt_global_compare}
 \end{figure}
-\enlargethispage*{\baselineskip}
+\enlargethispage*{1.2\baselineskip}
 Global cascades (Fig.~\ref{fig:brummitt_global_compare}) show the same qualitative non-monotonic pattern.
 Small coupling suppresses the largest events; strong coupling enables system-wide propagation.
 For the regular-module case, the optimum lies near $p^*\approx 0.01$, consistent with~\cite{brummitt2012suppressing}.
